@@ -3,6 +3,7 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout
 from keras.utils import np_utils # For y values
+import time
 
 dataset = pd.read_csv('./lead_gen.csv')
 
@@ -47,8 +48,10 @@ model.add(Dense(dimof_middle, activation='tanh'))
 model.add(Dense(dimof_middle, activation='tanh'))
 model.add(Dense(dimof_output_train, activation='softmax'))
 model.compile(loss='mse', optimizer='sgd', metrics=['accuracy'])
-
+start_time = time.time()
 model.fit(X, Y,epochs= 100, batch_size=128, verbose = 2)
+elapsed_time = time.time() - start_time
+print("run time : ", elapsed_time)
 loss, accuracy = model.evaluate(X, Y, verbose=0, batch_size=128)
 print('loss train: ', loss)
 print('accuracy train: ', accuracy)
